@@ -1,0 +1,130 @@
+﻿@model BeforeWatch.Web.Controllers.AdminController.FilmDiziViewModel
+
+@{
+    ViewBag.Title = "FilmEkle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@section styles{
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-weight: 200;
+            font-family: "Helvetica";
+            color: #ff6b35;
+        }
+
+        .search {
+            text-align: center;
+            margin: 15% auto 20rem auto;
+        }
+
+        #glass {
+            height: 10rem;
+            width: 10rem;
+        }
+
+        #random {
+            color: #ff6b35;
+            border: 4px solid #ff6b35;
+            border-radius: 0;
+            background-color: transparent;
+        }
+
+            #random:hover {
+                color: #37123C;
+                border: 4px solid #37123C;
+                background-color: #ff6b35;
+            }
+
+        .form-group {
+            display: None;
+            margin: 0 auto;
+        }
+
+            .form-group #FilmAra {
+                background-color: transparent;
+                padding: .5rem 15rem .5rem 1rem;
+                border-radius: 15px;
+                border: 4px solid #ff6b35;
+            }
+
+        .search ul {
+            list-style-type: none;
+        }
+
+        .result li {
+            font-size: 3rem;
+            font-weight: 600;
+        }
+
+        .result {
+            background-color: #B8C4BB;
+            color: #505168;
+            margin: 3em auto;
+            max-width: 75%;
+            border-radius: 5px;
+            border: 4px solid #ff6b35;
+            padding: 2rem;
+            text-decoration: none;
+        }
+
+            .result:hover {
+                background-color: #505168;
+                color: #B8C4BB;
+            }
+    </style>
+}
+
+<div class="search">
+    <div class="container">
+        <div class="searchglass">
+            <svg id="glass" xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="0 0 490 490">
+                <path fill="none" stroke="#ff6b35" stroke-width="24" stroke-linecap="round" d="m280,278a153,153 0 1,0-2,2l170,170m-91-117 110,110-26,26-110-110" />
+            </svg>
+            <h4>Düzenlenecek filmi seçmek için büyüteçe tıkla!</h4>
+        </div>
+        <form class="form-group" id="AramaFormu">
+            @Html.DropDownListFor(x => x.SecilenDiziFilm, Model.SecilebilirListe, "Film Dizi Seç", new { @class = "form-control", @id = "FilmAra", @type = "text" })
+            <div class="btn" id="exit">x</div>
+        </form>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        //Sayfa hazırsa
+        $(document).ready(function () {
+            //arama butonuna tıkladığında
+            $("#glass").on("click", function () {
+                $(".searchglass").hide(function () {
+                    $(".form-group").show("slow");
+                });
+                setTimeout(function () {
+                    $('#FilmAra').select2('open');
+                }, 2000 /*2 sn*/);
+
+            });
+            //çıkış butonuna tıkladığında
+            $("#exit").on("click", function () {
+                $(".form-group").hide(function () {
+                    $(".searchglass").show("slow");
+                });
+            });
+
+            //Select2 ye çevirsin dropdownlistleri
+            $('#FilmAra').select2();
+
+            //açılan listeden filmin idsini seçecek kodumuz
+            $('select').on('change', function () {
+                var url = "/admin/filmduzenle/?id=" + this.value;
+                window.location.href = url;
+            });
+
+        });
+    </script>
+}

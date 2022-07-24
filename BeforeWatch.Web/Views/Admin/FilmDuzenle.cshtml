@@ -1,0 +1,139 @@
+﻿@model BeforeWatch.Web.Controllers.AdminController.FilmEkleViewModel
+
+@{
+    ViewBag.Title = "FilmEkle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section styles{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet">
+}
+
+<div class="row">
+    <div class="col-md-12 order-md-1">
+        <h4 class="mb-3">Film Düzenle</h4>
+        <hr />
+        <form action="/Admin/FilmDuzenle" method="post" class="needs-validation" enctype="multipart/form-data" validate>
+
+            <input type="text" style="display: none" class="form-control" id="id" name="id" value="@TempData["ID"]" required>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Film/Dizi İsmi</label>
+                    <input type="text" class="form-control" id="name" name="name" value="@TempData["Name"]" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Tipi</label>
+                    <select class="form-control" name="FilmOrSeries" id="FilmOrSeries">
+                        <option value="Dizi">Dizi</option>
+                        <option value="Film">Film</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Türü</label>
+                    @Html.DropDownListFor(a => a.SecilenTip, Model.SecilebilirListe, "Kategori Seç", new { @class = "form-control", Name = "TypeID", Id = "TypeID", @type = "text", required = "required" })
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Yönetmen</label>
+                    <input type="text" class="form-control" id="director" name="director" value="@TempData["Director"]">
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Oyuncu Kadrosu</label>
+                    <input type="text" class="form-control" id="cast" name="cast" value="@TempData["Cast"]">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Ülke</label>
+                    <input type="text" class="form-control" id="country" name="country" value="@TempData["Country"]">
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Çıkış Yılı</label>
+                    <input type="text" class="form-control" id="releaseyear" name="releaseyear" value="@TempData["ReleaseYear"]">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Süresi</label>
+                    <input type="text" class="form-control" id="duration" name="duration" value="@TempData["Duration"]">
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-12 mb-3">
+                    <label>Youtube Fragman Linki</label>
+                    <input type="text" class="form-control" id="YoutubeFragman" name="YoutubeFragman" value="@TempData["YoutubeFragman"]">
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-12 mb-3">
+                    <label>Detaylar</label>
+                    <div class="card-detail">
+                        <textarea style="resize: none;" id="detail" name="detail" rows="4" cols="150">@TempData["Detail"]</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-12 mb-3">
+                    <label>Film Afişi</label>
+                    <div class="card-detail">
+                        <span>
+                            @if (TempData["PosterName"] != null)
+                            {
+                                <img src="@string.Concat("/Images/",TempData["PosterName"])" class="card-img-top" style="width: 25%; display: block; border-style: solid; border-width: medium; margin-top: 10px; border-radius: 20px; border-color: #ff6b35;">
+                            }
+                        </span>
+                        <br />
+                        <input type="file" name="filename" accept=".png, .jpg, .jpeg" />
+                        <input type="hidden" name="profile_avatar_remove" />
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="window.location.href='/Admin/FilmSil/@TempData["ID"]'" style="margin-top:5px; background-color: red; color: #fff" type="button">Filmi Sil</button>
+
+
+            <hr class="mb-4">
+            <button style="background:#ff6b35; border:none" class="btn btn-primary btn-lg btn-block" type="submit">Düzenle</button>
+        </form>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                locale: 'tr',
+                format: 'YYYY'
+            });
+            //sayfa yüklediğinde
+            $(document).ready(function () {
+
+                //film mi yoksa dizi mi olduğunu controllerden gelen FilmOrSeries ile select listte işaretler
+                $("#FilmOrSeries option[value=@TempData["FilmOrSeries"]]").attr('selected', 'selected');
+
+                //tipini controllerden gelen TypeID ile select listte işaretler
+                $("#TypeID ").val('@TempData["TypeID"]');
+
+                //eğer
+                if ("@TempData["EklemeIslemi"]" != "")
+                {
+                alert("Sonuç Başarılı");
+                }
+            });
+
+        });
+    </script>
+}
+

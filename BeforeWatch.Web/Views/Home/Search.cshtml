@@ -1,0 +1,258 @@
+﻿﻿@model BeforeWatch.Web.Controllers.HomeController.SearchViewModel
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <style>
+        .clear {
+            clear: both;
+        }
+
+        p {
+            font-size: 5px;
+            margin: 2px;
+        }
+
+        .id-card-holder {
+            margin: 0 auto;
+            font-family: 'verdana';
+        }
+
+        .id-card {
+            background-color: #fff;
+            padding: 0px;
+            text-align: center;
+            box-shadow: 0 0 1.5px 0px #b9b9b9;
+            display: block;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 10px;
+            background-color: #ff6b35;
+        }
+
+        .id {
+            display: inline-block;
+            float: left;
+            font-size: 15px;
+            color: #fff;
+            text-align: center;
+            margin-left: 30px;
+        }
+
+        .card-detail {
+            width: 100%;
+            display: block;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .stu-info {
+            padding: 0 10px;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+            .stu-info h3 {
+                font-size: 15px;
+                margin: 0 0 10px 0;
+                padding: 5px 15px;
+                background-color: #101010;
+                border-radius: 70px;
+                text-align: center;
+                color: #fff;
+                border: 1px solid #4a0a2cfc;
+            }
+
+            .stu-info p {
+                font-size: 12px;
+                margin: 0 0 3px 0;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+                .stu-info p span {
+                    text-transform: capitalize;
+                    font-weight: 300;
+                }
+
+
+        footer {
+            padding: 10px 0;
+            border-top: 1px solid #000;
+            text-align: left;
+        }
+
+            footer p {
+                font-size: 10px;
+                margin: 0 0 2px 0;
+            }
+    </style>
+}
+
+
+
+<div class="id-card-holder">
+    <div class="id-card">
+        <div class="header">
+            <p class="id">@Model.secilenFilm.Name </p>
+            <div class="clear"></div>
+        </div>
+        <span class="b-border"></span>
+
+        <div class="card-detail">
+            <div class="stu-info">
+                <h3>Kullanıcı Puanı : <span> <a style="font-weight: 700; color: #fff">@ViewBag.ortalamaSkor </a> /10 (@ViewBag.oyVerenKullaniciSayisi Kez Oy Verildi) </span></h3>
+
+                @if (Model.secilenFilm.PosterName != null)
+                {
+                    <p style="padding-top:10px; border-top: 1px solid #000;">
+                        Afiş :
+                        <span>
+                            <img src="@string.Concat("/Images/",Model.secilenFilm.ID,".jpg")" class="card-img-top" style="width: 25%; display: block; border-style: solid; border-width: medium; margin-top: 10px; border-radius: 20px; border-color: #ff6b35;">
+                        </span>
+                    </p>
+                }
+                <p style="padding-top:10px; border-top: 1px solid #000;">Oyuncular : <span> @Model.secilenFilm.Cast</span></p>
+                <p style="padding-top:10px; border-top: 1px solid #000;">Ülkeler : <span> @Model.secilenFilm.Country</span></p>
+                <p style="padding-top:10px; border-top: 1px solid #000;">Yönetmen : <span> @Model.secilenFilm.Director</span></p>
+                <p style="padding-top:10px; border-top: 1px solid #000;">Süre : <span> @Model.secilenFilm.Duration</span></p>
+                <p style="padding-top:10px; border-top: 1px solid #000;">Tip : <span> @Model.secilenFilm.Type.Name</span></p>
+                <p style="padding-top:10px; border-top: 1px solid #000;">Çıkış Yılı : <span> @Model.secilenFilm.ReleaseYear</span></p>
+                <p style="padding-top:10px; border-top: 1px solid #000;">Film mi? Dizi mi? : <span> @Model.secilenFilm.FilmOrSeries</span></p>
+                @if (Model.secilenFilm.YoutubeFragman != null)
+                {
+                    <p style="padding-top:10px; border-top: 1px solid #000;">
+                        Fragman :
+                        <span>
+                            <button data-toggle="modal" data-target="#exampleModal" style="margin-top:5px; background-color: #ff6b35; color: #fff" type="button">İzle</button>
+                        </span>
+                    </p>
+                    <!-- Button trigger modal -->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">@Model.secilenFilm.Name | Fragman</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/@Model.secilenFilm.YoutubeFragman" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <p style="padding-top:10px; border-top: 1px solid #000;">Detaylar : <span> @Model.secilenFilm.Detail</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 50px;" class="id-card-holder">
+    <div class="id-card">
+        <div class="header">
+            <p class="id">Yorum Yaz</p>
+            <div class="clear"></div>
+        </div>
+        <span class="b-border"></span>
+
+        <div class="card-detail">
+            <textarea style="resize: none;" id="w3review" name="w3review" rows="4" cols="120"></textarea>
+        </div>
+        <label>Puanınız:</label>
+        <fieldset>
+            <span class="star-cb-group">
+                <input type="radio" id="rating-10" name="rating" value="10" /><label for="rating-10">10</label>
+                <input type="radio" id="rating-9" name="rating" value="9" /><label for="rating-9">9</label>
+                <input type="radio" id="rating-8" name="rating" value="8" /><label for="rating-8">8</label>
+                <input type="radio" id="rating-7" name="rating" value="7" /><label for="rating-7">7</label>
+                <input type="radio" id="rating-6" name="rating" value="6" /><label for="rating-6">6</label>
+                <input type="radio" id="rating-5" name="rating" value="5" checked="checked" /><label for="rating-5">5</label>
+                <input type="radio" id="rating-4" name="rating" value="4" /><label for="rating-4">4</label>
+                <input type="radio" id="rating-3" name="rating" value="3" /><label for="rating-3">3</label>
+                <input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2">2</label>
+                <input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1">1</label>
+                <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" /><label for="rating-0">0</label>
+            </span>
+        </fieldset>
+
+        <button id="yorumgonder" style="margin-top:5px; background-color: #ff6b35; color: #fff" type="button">Yorum Gönder</button>
+
+    </div>
+</div>
+
+@foreach (var item in Model.YorumListesi)
+{
+    <div style="margin-top: 50px;" class="id-card-holder">
+        <div class="id-card">
+            <div style="background: #101010" class="header">
+                <p class="id">AD: @item.User.Firstname @item.User.Lastname | PUAN: @item.Score</p>
+                <div class="clear"></div>
+            </div>
+            <span class="b-border"></span>
+            <div class="card-detail">
+                <textarea disabled id="w3review" name="w3review" rows="4" style="resize: none;" cols="120">@item.Comment1</textarea>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        //sayfa hazırken
+        $(document).ready(function () {
+            //yorum göndere basıldığında
+            $("#yorumgonder").click(function () {
+                //verilen puanı al
+                var radios = document.getElementsByName('rating');
+                for (var i = 0, length = radios.length; i < length; i++) {
+                    if (radios[i].checked) {
+                        var radiobutton = radios[i].value;
+
+                        break;
+                    }
+                }
+                //arka tarafa gidecek modelimiz
+                var Comment =
+                {
+                    Comment1: document.getElementById("w3review").value,
+                    //radio buttonun değeri
+                    Score: radiobutton,
+                    FilmSeriesId: @Model.secilenFilm.ID,
+                }
+                //ajax yani asenkron request atıyoruz aşağıdaki controllerımıza
+                $.ajax(
+                    {
+                        url: '/Home/YorumGonder',
+                        type: 'POST',
+                        //yukarda tanımladığımız modeli data olarak arka tarafa gönderilecek istekte gönder
+                        data: Comment,
+                        //başarılı ise
+                        success: function (result) {
+                            if (result.SonucTipi == 1) {
+                                location.reload();
+                            }
+                            else {
+                                alert("Başarısız işlem!")
+                            }
+                        },
+                        error: function (ex) {
+                            alert(ex);
+                        }
+                    });
+            });
+        });
+    </script>
+}

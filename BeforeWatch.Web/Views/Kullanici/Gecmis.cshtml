@@ -1,0 +1,339 @@
+﻿@model BeforeWatch.Web.Controllers.KullaniciController.GecmisViewModel
+@{
+    ViewBag.Title = "Gecmis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <style>
+        .clear {
+            clear: both;
+        }
+
+        p {
+            font-size: 5px;
+            margin: 2px;
+        }
+
+        .id-card-holder {
+            margin: 0 auto;
+            font-family: 'verdana';
+        }
+
+        .id-card {
+            background-color: #fff;
+            padding: 0px;
+            text-align: center;
+            box-shadow: 0 0 1.5px 0px #b9b9b9;
+            display: block;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 10px;
+            background-color: #ff6b35;
+        }
+
+        .id {
+            display: inline-block;
+            float: left;
+            font-size: 15px;
+            color: #fff;
+            text-align: center;
+            margin-left: 30px;
+        }
+
+        .card-detail {
+            width: 100%;
+            display: block;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .stu-info {
+            padding: 0 10px;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+            .stu-info h3 {
+                font-size: 15px;
+                margin: 0 0 10px 0;
+                padding: 5px 15px;
+                background-color: #101010;
+                border-radius: 70px;
+                text-align: center;
+                color: #fff;
+                border: 1px solid #4a0a2cfc;
+            }
+
+            .stu-info p {
+                font-size: 12px;
+                margin: 0 0 3px 0;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+                .stu-info p span {
+                    text-transform: capitalize;
+                    font-weight: 300;
+                }
+
+
+        footer {
+            padding: 10px 0;
+            border-top: 1px solid #000;
+            text-align: left;
+        }
+
+            footer p {
+                font-size: 10px;
+                margin: 0 0 2px 0;
+            }
+    </style>
+}
+
+<h4 class="mb-3">Film Yorumlarınız</h4>
+<hr />
+
+@if (Model.YorumListesi.Count == 0)
+{
+    <a style="text-decoration: none; color: red">Hiç yorumunuz yok!</a>
+}
+else
+{
+    foreach (var item in Model.YorumListesi)
+    {
+
+        string arkaplan = "red";
+        string onayDurumu = "Onay Bekliyor";
+
+        if (item.IsActive.GetValueOrDefault(true))
+        {
+            arkaplan = "green";
+            onayDurumu = "Onaylandı";
+        }
+
+        <div style="margin-top: 50px" ; class="id-card-holder">
+            <div class="id-card">
+                <div style="background: @arkaplan" class="header">
+                    <p class="id">Film Adı: @item.FilmSeries.Name | Puanınız: @item.Score (@onayDurumu) </p>
+                    <div class="clear"></div>
+                </div>
+                <span class="b-border"></span>
+                <p class="b-border">sss</p>
+                <div class="card-detail">
+                    <textarea style="resize: none;" disabled id="w3review" name="w3review" rows="4" cols="120">@item.Comment1</textarea>
+                    @*yorum değiştir*@
+                    <a href="/Kullanici/YorumDetayi/?id=@item.ID" class="svg-icon svg-icon svg-icon-xl">
+                        <svg width="50" height="50" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             viewBox="0 0 452.025 452.025" style="enable-background:new 0 0 452.025 452.025;" xml:space="preserve">
+<g>
+                        <g>
+                        <path d="M362.612,34.125h-55.2l13.6-13.6c4.7-4.7,4.7-12.3,0-17s-12.3-4.7-17,0l-34,34.1c-2.3,2.3-3.5,5.3-3.5,8.5
+			s1.3,6.2,3.5,8.5l34.1,34.1c2.3,2.3,5.4,3.5,8.5,3.5s6.1-1.2,8.5-3.5c4.7-4.7,4.7-12.3,0-17l-13.6-13.6h55.2c35.9,0,65,29.2,65,65
+			v40.3c0,6.6,5.4,12,12,12s12-5.4,12-12v-40.3C451.712,74.025,411.712,34.125,362.612,34.125z" />
+
+
+
+
+
+
+
+                        <path d="M438.812,230.925h-197.1c-6.6,0-12,5.4-12,12v197.1c0,6.6,5.4,12,12,12h197.1c6.6,0,12-5.4,12-12v-197.1
+			C450.812,236.225,445.412,230.925,438.812,230.925z M426.812,428.025h-173.1v-173.1h173.1L426.812,428.025L426.812,428.025z" />
+
+
+
+
+
+
+
+                        <path d="M147.912,363.325c-4.7-4.7-12.3-4.7-17,0c-4.7,4.7-4.7,12.3,0,17l13.6,13.6h-55.2c-35.9,0-65-29.2-65-65v-40.3
+			c0-6.6-5.4-12-12-12s-12,5.4-12,12v40.3c0,49.1,39.9,89,89,89h55.2l-13.6,13.6c-4.7,4.7-4.7,12.3,0,17c2.3,2.3,5.4,3.5,8.5,3.5
+			s6.1-1.2,8.5-3.5l34.1-34.1c4.7-4.7,4.7-12.3,0-17L147.912,363.325z" />
+
+
+
+
+
+
+
+                        <path d="M13.212,24.025c3.2,0,6.3-1.3,8.5-3.5s3.5-5.3,3.5-8.5c0-3.1-1.3-6.3-3.5-8.5s-5.3-3.5-8.5-3.5s-6.3,1.3-8.5,3.5
+			s-3.5,5.3-3.5,8.5s1.3,6.3,3.5,8.5C7.012,22.725,10.012,24.025,13.212,24.025z" />
+
+
+
+
+
+
+
+                        <path d="M111.812,24.025c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12S105.112,24.025,111.812,24.025z" />
+
+
+
+
+
+
+
+                        <path d="M62.512,24.025c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12S55.912,24.025,62.512,24.025z" />
+
+
+
+
+
+
+
+                        <path d="M161.012,24.025c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12S154.412,24.025,161.012,24.025z" />
+
+
+
+
+
+
+
+                        <path d="M210.312,0.025c-3.1,0-6.3,1.3-8.5,3.5s-3.5,5.3-3.5,8.5s1.3,6.3,3.5,8.5s5.3,3.5,8.5,3.5s6.3-1.3,8.5-3.5
+			s3.5-5.3,3.5-8.5s-1.3-6.3-3.5-8.5S213.512,0.025,210.312,0.025z" />
+
+
+
+
+
+
+
+                        <path d="M210.312,147.925c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12C222.312,153.225,217.012,147.925,210.312,147.925z" />
+
+
+
+
+
+
+
+                        <path d="M210.312,98.625c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12C222.312,103.925,217.012,98.625,210.312,98.625z" />
+
+
+
+
+
+
+
+                        <path d="M210.312,49.325c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12C222.312,54.725,217.012,49.325,210.312,49.325z" />
+
+
+
+
+
+
+
+                        <path d="M210.312,197.125c-3.2,0-6.3,1.3-8.5,3.5s-3.5,5.3-3.5,8.5c0,3.1,1.3,6.3,3.5,8.5s5.3,3.5,8.5,3.5s6.3-1.3,8.5-3.5
+			s3.5-5.3,3.5-8.5s-1.3-6.3-3.5-8.5C216.613,198.425,213.512,197.125,210.312,197.125z" />
+
+
+
+
+
+
+
+                        <path d="M161.012,221.125c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12C149.012,215.825,154.412,221.125,161.012,221.125z" />
+
+
+
+
+
+
+
+                        <path d="M111.812,221.125c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12C99.812,215.825,105.112,221.125,111.812,221.125z" />
+
+
+
+
+
+
+
+                        <path d="M62.512,221.125c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12C50.512,215.825,55.912,221.125,62.512,221.125z" />
+
+
+
+
+
+
+
+                        <path d="M13.212,221.125c3.2,0,6.3-1.3,8.5-3.5s3.5-5.3,3.5-8.5s-1.3-6.3-3.5-8.5s-5.3-3.5-8.5-3.5s-6.3,1.3-8.5,3.5
+			s-3.5,5.3-3.5,8.5c0,3.1,1.3,6.3,3.5,8.5C7.012,219.825,10.012,221.125,13.212,221.125z" />
+
+
+
+
+
+
+
+                        <path d="M13.212,171.925c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12S6.612,171.925,13.212,171.925z" />
+
+
+
+
+
+
+
+                        <path d="M13.212,122.625c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12C1.212,117.225,6.612,122.625,13.212,122.625z" />
+
+
+
+
+
+
+
+                        <path d="M13.212,73.325c6.6,0,12-5.4,12-12s-5.4-12-12-12s-12,5.4-12,12S6.612,73.325,13.212,73.325z" />
+
+
+
+
+
+
+
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+                    </a>
+                    @*yorum sil*@
+                    <a href="/Kullanici/YorumSil/?id=@item.ID" class="svg-icon svg-icon svg-icon-xl">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg-->
+                        <svg width="50" height="50" viewBox="-64 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m256 80h-32v-48h-64v48h-32v-80h128zm0 0" fill="#62808c" /><path d="m304 512h-224c-26.507812 0-48-21.492188-48-48v-336h320v336c0 26.507812-21.492188 48-48 48zm0 0" fill="#e76e54" /><path d="m384 160h-384v-64c0-17.671875 14.328125-32 32-32h320c17.671875 0 32 14.328125 32 32zm0 0" fill="#77959e" /><path d="m260 260c-6.246094-6.246094-16.375-6.246094-22.625 0l-41.375 41.375-41.375-41.375c-6.25-6.246094-16.378906-6.246094-22.625 0s-6.246094 16.375 0 22.625l41.375 41.375-41.375 41.375c-6.246094 6.25-6.246094 16.378906 0 22.625s16.375 6.246094 22.625 0l41.375-41.375 41.375 41.375c6.25 6.246094 16.378906 6.246094 22.625 0s6.246094-16.375 0-22.625l-41.375-41.375 41.375-41.375c6.246094-6.25 6.246094-16.378906 0-22.625zm0 0" fill="#fff" /></svg>
+                        <!--end::Svg Icon-->
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+}

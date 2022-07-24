@@ -1,0 +1,142 @@
+﻿@model List<BeforeWatch.Web.Models.Comment>
+
+@{
+    ViewBag.Title = "Onaysız Yorumlar";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section styles{
+    <style>
+        .clear {
+            clear: both;
+        }
+
+        p {
+            font-size: 5px;
+            margin: 2px;
+        }
+
+        .id-card-holder {
+            margin: 0 auto;
+            font-family: 'verdana';
+        }
+
+        .id-card {
+            background-color: #fff;
+            padding: 0px;
+            text-align: center;
+            box-shadow: 0 0 1.5px 0px #b9b9b9;
+            display: block;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 10px;
+            background-color: #ff6b35;
+        }
+
+        .id {
+            display: inline-block;
+            float: left;
+            font-size: 15px;
+            color: #fff;
+            text-align: center;
+            margin-left: 30px;
+        }
+
+        .card-detail {
+            width: 100%;
+            display: block;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .stu-info {
+            padding: 0 10px;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+            .stu-info h3 {
+                font-size: 15px;
+                margin: 0 0 10px 0;
+                padding: 5px 15px;
+                background-color: #101010;
+                border-radius: 70px;
+                text-align: center;
+                color: #fff;
+                border: 1px solid #4a0a2cfc;
+            }
+
+            .stu-info p {
+                font-size: 12px;
+                margin: 0 0 3px 0;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+                .stu-info p span {
+                    text-transform: capitalize;
+                    font-weight: 300;
+                }
+
+
+        footer {
+            padding: 10px 0;
+            border-top: 1px solid #000;
+            text-align: left;
+        }
+
+            footer p {
+                font-size: 10px;
+                margin: 0 0 2px 0;
+            }
+    </style>
+}
+
+<h4 class="mb-3">Onaysız Yorumlar</h4>
+<hr />
+
+
+@if (Model.Count == 0)
+{
+    <a>Hiç onaylanacak yorum yok!</a>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <div style="margin-top: 50px;" class="id-card-holder">
+            <div class="id-card">
+                <div style="background: red" class="header">
+                    <p class="id">AD: @item.User.Firstname @item.User.Lastname | PUAN: @item.Score</p>
+                    <div class="clear"></div>
+                </div>
+                <span class="b-border"></span>
+                <div class="card-detail">
+                    <textarea disabled id="w3review" name="w3review" rows="4" cols="120">@item.Comment1</textarea>
+                    <a href="/Admin/YorumOnayla/?id=@item.ID" class="svg-icon svg-icon svg-icon-xl">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg-->
+                        <svg width="50" height="50" viewBox="0 0 507 507" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0)">
+                                <path d="M253.2 502.4C390.829 502.4 502.4 390.829 502.4 253.2C502.4 115.571 390.829 4 253.2 4C115.571 4 4 115.571 4 253.2C4 390.829 115.571 502.4 253.2 502.4Z" fill="#54B265" />
+                                <path d="M372.8 200.4L361.6 189.2C357.2 184.8 349.6 184.8 345.2 189.2L232 302.4L162.4 232.8C158 228.4 150.4 228.4 146 232.8L134.4 244C130 248.4 130 256 134.4 260.4L223.6 349.6C228 354 235.6 354 240 349.6L250.4 339.2L251.2 338.4L372.8 216.8C377.2 212.4 377.2 205.2 372.8 200.4Z" fill="#F4EFEF" />
+                                <path d="M253.2 506.4C113.6 506.4 0 392.8 0 253.2C0 113.6 113.6 0 253.2 0C392.8 0 506.4 113.6 506.4 253.2C506.4 392.8 392.8 506.4 253.2 506.4ZM253.2 8C118 8 8 118 8 253.2C8 388.4 118 498.4 253.2 498.4C388.4 498.4 498.4 388.4 498.4 253.2C498.4 118 388.4 8 253.2 8Z" fill="black" />
+                                <path d="M231.6 357.2C227.6 357.2 223.6 355.6 220.4 352.8L131.2 263.6C125.2 257.6 125.2 247.6 131.2 241.6L142.8 230C148.8 224 159.2 224 164.8 230L231.6 296.8L342 186.4C344.8 183.6 348.8 182 353.2 182C357.2 182 361.2 183.6 364.4 186.4L375.6 197.6C381.6 203.6 381.6 213.6 375.6 219.6L242.8 352.4C239.6 355.6 235.6 357.2 231.6 357.2ZM154 233.6C152 233.6 150 234.4 148.4 236L136.8 247.6C134 250.4 134 255.6 136.8 258.4L226 347.6C228.8 350.4 234 350.4 236.8 347.6L369.6 214.8C372.4 212 372.4 206.8 369.6 204L358.4 192.8C355.6 190 350.4 190 347.6 192.8L234.4 306C232.8 307.6 230.4 307.6 228.8 306L159.2 236.4C158 234.4 156 233.6 154 233.6Z" fill="black" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0">
+                                    <rect width="506.4" height="506.4" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                        <!--end::Svg Icon-->
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+}
+

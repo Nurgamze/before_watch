@@ -1,0 +1,77 @@
+﻿@model BeforeWatch.Web.Models.User
+
+@{
+    ViewBag.Title = "Profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet">
+}
+
+<div class="row">
+    <div class="col-md-12 order-md-1">
+        <h4 class="mb-3">Profil Bilgileriniz</h4>
+        <hr />
+        <form action="/Kullanici/Profil" method="post" class="needs-validation" validate>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName">First name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstname" value="@Model.Firstname" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Last name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastname" value="@Model.Lastname" required>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" value="@Model.Email" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Şifre</label>
+                    <input type="password" class="form-control" id="password" name="password" value="@Model.Password" required>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px" class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="lastName">Doğum Tarihi</label>
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' name="birthday" class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <button style="background:#ff6b35; border:none" class="btn btn-primary btn-lg btn-block" type="submit">Güncelle</button>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            //id si datetimepicker1 olanınn ayarları
+            $('#datetimepicker1').datetimepicker({
+                locale: 'tr',
+                format: 'DD.MM.YYYY'
+            });
+        });
+
+        //tarih filtresine kişinin doğum gününü ata
+        $("#datetimepicker1").find("input").val("@Model.Birthday");
+
+    </script>
+}
+
+
+

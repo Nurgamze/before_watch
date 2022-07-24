@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.baslik = "Kayıt Sayfası";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<form method="post" action="/Kullanici/KayitOl" class="form-signin">
+    <h1 class="h3 mb-3 font-weight-normal">Lütfen Kayıt Olun</h1>
+    <input type="text" name="Firstname" id="isim" class="form-control" placeholder="İsim" required autofocus>
+    <input type="text" name="Lastname" id="soyisim" class="form-control" placeholder="Soyisim" required>
+    <input type="email" name="Email" id="email" class="form-control" placeholder="Email" required>
+    <input type="password" name="Password" id="sifre" class="form-control" placeholder="Şifre" required>
+    <input type="datetime" name="Birthday" id="dogumTarihi" class="form-control" placeholder="Doğum Tarihi" required>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Kayıt Ol</button>
+</form>
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+}
+
